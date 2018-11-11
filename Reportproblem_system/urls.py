@@ -23,10 +23,8 @@ from report import views
 urlpatterns = [
     url(r'^admin/', admin.site.urls),
     url(r'^haha/', TemplateView.as_view(template_name="report_App.html")),
-    #url(r'^ioio/', TemplateView.as_view(template_name="ioio.htxml")),
     url(r'^ioio/', views.SubmitReport.as_view(), name='submitreport'),
     url(r'^loginuser/$', views.UserLogin.as_view(), name='loginuser'),
     url(r'^register/$', views.RegisterView.as_view(), name='registeruser'),
     url(r'^checker/$', TemplateView.as_view(template_name="check.html")),
 ]
-list
