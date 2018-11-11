@@ -1,0 +1,54 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>登陆</title>
+    <link rel="stylesheet" type="text/css" href="/static/App_files/bootstrap.min.css">
+    <link rel="stylesheet" type="text/css" href="/static/App_files/bootstrap-theme.min.css">
+    <script src="/static/App_files/bootstrap.min.js"></script>
+</head>
+<body>
+<div class="col-lg-4"></div>
+<div class="col-lg-4 container">
+    <form action="{% url 'loginuser' %}"  class="form-horizontal" method="post">
+    <fieldset>
+      <div id="legend">
+        <legend>登录</legend>
+      </div>
+
+    <div class="control-group">
+
+          <!-- Text input-->
+          <label class="control-label" for="input01">账号</label>
+          <div class="controls">
+            <input class="input-xlarge" type="text" placeholder="username" name="username">
+            <p class="help-block"></p>
+          </div>
+        </div>
+
+    <div class="control-group">
+
+          <!-- Text input-->
+          <label class="control-label" for="input01">密码</label>
+          <div class="controls">
+            <input class="input-xlarge" type="password" placeholder="password" name="password">
+            <p class="help-block"></p>
+          </div>
+        </div>
+{% csrf_token %}
+    <div class="control-group">
+          <label class="control-label"></label>
+
+          <!-- Button -->
+          <div class="controls">
+            <button class="btn btn-success">登陆</button>
+          </div>
+        </div>
+
+    </fieldset>
+
+  </form>
+</div>
+<div class="col-lg-4"></div>
+</body>
+</html>

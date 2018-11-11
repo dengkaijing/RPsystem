@@ -1,0 +1,65 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>注册</title>
+    <link rel="stylesheet" type="text/css" href="/static/App_files/bootstrap.min.css">
+    <link rel="stylesheet" type="text/css" href="/static/App_files/bootstrap-theme.min.css">
+    <script src="/static/App_files/bootstrap.min.js"></script>
+
+</head>
+<body>
+<div class="col-lg-4"></div>
+<div class="col-lg-4 container">
+    <form action="{% url 'registeruser' %}"  class="form-horizontal" method="post">
+    <fieldset>
+      <div id="legend">
+        <legend>注册</legend>
+      </div>
+
+    <div class="control-group">
+
+          <!-- Text input-->
+          <label class="control-label" for="input01">账号</label>
+          <div class="controls {% if registerform.errors.username %}errorput{% endif %}">
+            <input class="input-xlarge" type="text" placeholder="username" name="username" value="{% if registerform.username.value %}{{ registerform.username.value }}{% endif %}">
+            <p class="help-block"></p>
+          </div>
+        </div>
+
+    <div class="control-group">
+
+          <!-- Text input-->
+          <label class="control-label" for="input01">密码</label>
+          <div class="controls {% if registerform.errors.password %}errorput{% endif %}">
+            <input class="input-xlarge" type="password" placeholder="password" name="password" value="{% if registerform.password.value %}{{ registerform.password.value }}{% endif %}">
+            <p class="help-block"></p>
+          </div>
+    </div>
+
+    <div class="control-group">
+
+          <!-- Text input-->
+          <label class="control-label" for="input01">邮箱</label>
+          <div class="controls {% if registerform.errors.useremail %}errorput{% endif %}">
+            <input class="input-xlarge" type="email" placeholder="email" name="useremail" value="{% if registerform.useremail.value %}{{ registerform.useremail.value }}{% endif %}">
+            <p class="help-block"></p>
+          </div>
+    </div>
+{% csrf_token %}
+    <div class="control-group">
+          <label class="control-label"></label>
+
+          <!-- Button -->
+          <div class="controls">
+            <button class="btn btn-success">注册</button>
+          </div>
+        </div>
+
+    </fieldset>
+
+  </form>
+</div>
+<div class="col-lg-4"></div>
+</body>
+</html>

@@ -1,0 +1,172 @@
+<!DOCTYPE html>
+{% load staticfiles %}
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>提单系统</title>
+
+    <link rel="stylesheet" type="text/css" href="/static/App_files/bootstrap.min.css">
+    <link rel="stylesheet" type="text/css" href="/static/App_files/bootstrap-theme.min.css">
+    <script src="/static/App_files/bootstrap.min.js"></script>
+    <style>
+        .my-define{
+            height: 100px;
+            width: 300px;
+        }
+        .talking-text{
+            height: 300px;
+            width: auto;
+            border-color: #2aabd2 ;
+            border: 2px solid;
+            overflow: auto;
+        }
+
+        .responsion{
+            color: #ac2925;
+        }
+        .mytext{
+            color: #2b669a;
+        }
+
+    </style>
+</head>
+<body>
+<div class="col-lg-4"></div>
+{% if request.user.is_authenticated %}
+    <div class="container col-lg-4">
+    <form action="{% url 'submitreport' %}" class="form-horizontal" method="post">
+    <fieldset>
+      <div id="legend" class="">
+        <legend class="">提单表</legend>
+          <span style="float: right">邮箱：{{ request.user.email  }}</span>
+          <span style="float: right">用户：{{ request.user.username }}&nbsp</span>
+          <br>
+
+
+      </div>
+    <div class="control-group">
+
+          <!-- Prepended text-->
+          <label class="control-label">接单人</label>
+          <div class="controls">
+            <div class="input-prepend">
+              <span class="add-on">^_^</span>
+              <input class="form-control" placeholder="接单人Emai" id="prependedInput" type="email" name="recevier">
+            </div>
+            <p class="help-block"></p>
+          </div>
+
+        </div><div class="control-group">
+
+          <!-- Text input-->
+          <label class="control-label" for="input01">设备IP</label>
+          <div class="controls">
+            <input type="text form-control" placeholder="IP" class="input-xlarge" name="device_ip">
+            <p class="help-block"></p>
+          </div>
+        </div>
+
+
+    <div class="control-group">
+
+          <!-- Select Multiple -->
+          <label class="control-label">设备版本</label>
+          <div class="controls">
+            <select class="input-xlarge form-control" multiple="multiple" name="device_version">
+      <option>ARM</option>
+      <option>Dorado5000</option>
+      <option>Dorado6000</option>
+      <option></option></select>
+          </div>
+        </div>
+
+    <div class="control-group">
+
+          <!-- Textarea -->
+          <label class="control-label">问题描述</label>
+          <div class="controls">
+
+                  <textarea type="" class="my-define" name="problem_text"> </textarea>
+
+          </div>
+        </div>
+        
+
+    <div class="control-group">
+          <label class="control-label">提交</label>
+
+          <!-- Button -->
+          <div class="controls">
+            <button class="btn btn-success">Submit</button>
+              <p class="help-block"></p>
+          </div>
+        </div>
+
+    </fieldset>
+        {% csrf_token %}
+  </form>
+
+
+{% else %}
+    <div class="col-lg-4">
+        <a style="float: right" class="fr loginbtn" href="{% url 'loginuser' %}"> 注册</a>
+        <a style="float: right" class="fr loginbtn" href="{% url 'loginuser' %}">登录 |</a>
+        <hr>
+    <strong style="text-align: center">请先登录，才能进入提单系统</strong>
+
+    </div>
+{% endif %}
+
+     <div class="talking">
+         <label class="control-label">自助查询修护</label>
+        <div class="talking-text"><ul></ul></div>
+         <p class="help-block"></p>
+         <input type="text" placeholder="输入想咨询的问题" id="sendText">
+         <input type="button" id="transmission" value="发 送" >
+
+
+     </div>
+</div>
+<div class="col-lg-4"></div>
+
+</body>
+<script src="/static/JS/jquery-2.1.1.min.js"></script>
+<script>
+    document.onkeyup = function(event){
+        if (event.keyCode==13){
+            document.getElementById("transmission").click();
+             event.returnValue=false;
+        }
+
+    };
+
+    document.querySelector("#transmission").onclick = function(){
+        textvalue = document.getElementById("sendText").value;
+        oli1 = document.createElement("li");
+        oli1.innerText = textvalue;
+        oli1.className = "mytext";
+        otext = document.querySelector("ul");
+        otext.appendChild(oli1);
+        document.getElementById("sendText").value="";
+
+        var xhr = new XMLHttpRequest();
+        xhr.open("post","http://www.tuling123.com/openapi/api");
+        xhr.setRequestHeader("Content-Type","application/x-www-form-urlencoded");
+        xhr.onreadystatechange = function(){
+            if(xhr.readyState == 4){
+                oli = document.createElement("li");
+                recevietext = xhr.responseText.split(":");
+                recevietext2 = recevietext[2].split("}");
+                oli.innerText = recevietext2[0];
+                oli.className = "responsion";
+                otext.appendChild(oli);
+            }
+        };
+
+        xhr.send("key=83eb3ff186904daaafa363d4aabd49d0&info="+textvalue);
+    }
+
+
+</script>
+
+</html>
